@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mental Stress Detection - Data Visualizations</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="static/style.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      section {
+        padding: 20px;
+      }
+      .chart-box {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      select {
+        margin: 20px 0;
+        padding: 10px;
+        font-size: 16px;
+      }
+      footer {
+        text-align: center;
+        margin-top: 30px;
+      }
+      h3 {
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>Mental Stress Detection - Data Visualizations</h1>
+      <label for="timeInterval">Select Time Interval (Days):</label>
+      <select id="timeInterval">
+        <option value="10">10 Days</option>
+        <option value="20">20 Days</option>
+        <option value="30">30 Days</option>
+        <option value="40">40 Days</option>
+      </select>
+
+      <div id="chartsContainer"></div>
+    </section>
+
+    <footer>
+      <p>© 2025 Mental Stress Detection by StressEase</p>
+    </footer>
+
+    <script>
+      // Function to generate random data for stress levels (between 0 and 2)
+      function generateRandomData(numPoints) {
+        return Array.from({ length: numPoints }, () => Math.random() * 2);
+      }
+
+      // Function to create colorful charts
+      function createChart(chartId, type, data, labels) {
+        const ctx = document.getElementById(chartId).getContext("2d");
+        const chartOptions = {
+          type: type,
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Stress Level",
+                data: data,
+                borderColor: `rgba(${Math.random() * 255}, ${
+                  Math.random() * 255
+                }, ${Math.random() * 255}, 1)`,
+                backgroundColor: `rgba(${Math.random() * 255}, ${
+                  Math.random() * 255
+                }, ${Math.random() * 255}, 0.3)`,
+                fill: true,
+                pointBackgroundColor: `rgba(${Math.random() * 255}, ${
+                  Math.random() * 255
+                }, ${Math.random() * 255}, 1)`,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+                labels: {
+                  font: {
+                    size: 14,
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                min: 0,
+                max: 2,
+                ticks: {
+                  stepSize: 0.5,
+                },
+                title: {
+                  display: true,
+                  text: "Stress Level (0-2)",
+                  font: {
+                    size: 14,
+                  },
+                },
+              },
+            },
+            elements: {
+              line: {
+                tension: 0.4, // Smooth line curve
+              },
+            },
+          },
+        };
+
+        // For pie chart
+        if (type === "pie") {
+          chartOptions.data.datasets[0].backgroundColor = [
+            "rgba(255, 99, 132, 0.6)",
+            "rgba(54, 162, 235, 0.6)",
+            "rgba(255, 206, 86, 0.6)",
+            "rgba(75, 192, 192, 0.6)",
+            "rgba(153, 102, 255, 0.6)",
+          ];
+          chartOptions.options.plugins.legend.position = "bottom";
+        }
+
+        // For bar chart
+        if (type === "bar") {
+          chartOptions.type = "bar";
+          chartOptions.options.scales.x = {
+            title: {
+              display: true,
+              text: "Days",
+              font: {
+                size: 14,
+              },
+            },
+          };
+        }
+
+        new Chart(ctx, chartOptions);
+      }
+
+      // Fetch selected time interval
+      const selectInterval = document.getElementById("timeInterval");
+
+      // Event listener for interval change
+      selectInterval.addEventListener("change", function () {
+        const interval = parseInt(this.value);
+        const labels = Array.from(
+          { length: interval },
+          (_, i) => `Day ${i + 1}`
+        );
+
+        // Clear existing charts
+        const chartsContainer = document.getElementById("chartsContainer");
+        chartsContainer.innerHTML = "";
+
+        // Create charts for 3 student types (0, 1, 2) and the selected interval
+        for (let studentType = 0; studentType < 3; studentType++) {
+          // Create line and pie charts
+          for (let chartType of ["line", "pie"]) {
+            const chartId = `chart_${studentType}_${chartType}_${interval}`;
+            const chartBox = document.createElement("div");
+            chartBox.classList.add("chart-box");
+            chartBox.innerHTML = `<h3>Student Type ${studentType} - ${
+              chartType.charAt(0).toUpperCase() + chartType.slice(1)
+            } Chart (${interval} Days)</h3><canvas id="${chartId}"></canvas>`;
+            chartsContainer.appendChild(chartBox);
+
+            // Generate random data for the current chart
+            const data = generateRandomData(interval);
+
+            // Create the chart
+            createChart(chartId, chartType, data, labels);
+          }
+
+          // Create bar chart
+          const chartId = `chart_${studentType}_bar_${interval}`;
+          const chartBox = document.createElement("div");
+          chartBox.classList.add("chart-box");
+          chartBox.innerHTML = `<h3>Student Type ${studentType} - Bar Chart (${interval} Days)</h3><canvas id="${chartId}"></canvas>`;
+          chartsContainer.appendChild(chartBox);
+
+          // Generate random data for the bar chart
+          const barData = generateRandomData(interval);
+
+          // Create the bar chart
+          createChart(chartId, "bar", barData, labels);
+        }
+      });
+
+      // Initial chart render with default interval (10 days)
+      selectInterval.dispatchEvent(new Event("change"));
+    </script>
+  </body>
+</html>

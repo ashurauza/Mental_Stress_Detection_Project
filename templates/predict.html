@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stress Level Prediction</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="static/favicon.jpg" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Styles */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 123, 255, 0.6),
+            rgba(0, 123, 255, 0.9)
+          ),
+          url("https://static.vecteezy.com/system/resources/previews/004/928/056/original/mental-health-awareness-with-meditation-background-free-vector.jpg");
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+      }
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #007bff;
+        font-size: 32px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .form-label {
+        font-weight: bold;
+        color: #555;
+      }
+      button {
+        width: 100%;
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 25px;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 5px 10px rgba(0, 123, 255, 0.3);
+      }
+      button:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(0, 123, 255, 0.5);
+      }
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          margin: 20px auto;
+          padding: 20px;
+        }
+        h1 {
+          font-size: 28px;
+        }
+        button {
+          font-size: 16px;
+          padding: 10px;
+        }
+      }
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 24px;
+        }
+        button {
+          font-size: 14px;
+          padding: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Stress Level Prediction</h1>
+      <form action="/predict" method="POST">
+        <!-- Add input fields for each feature -->
+
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input
+            type="number"
+            class="form-control"
+            id="age"
+            name="age"
+            placeholder="Enter your age"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="form-label">Gender</label>
+          <select class="form-select" id="gender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="education_level" class="form-label"
+            >Education Level</label
+          >
+          <select
+            class="form-select"
+            id="education_level"
+            name="education_level"
+            required
+          >
+            <option value="UG">Undergraduate</option>
+            <option value="PG">Postgraduate</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="graduation_year" class="form-label"
+            >Year of Graduation</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="graduation_year"
+            name="graduation_year"
+            placeholder="Enter year of graduation"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="field_of_study" class="form-label">Field of Study</label>
+          <select
+            class="form-select"
+            id="field_of_study"
+            name="field_of_study"
+            required
+          >
+            <option value="Engineering">Engineering</option>
+            <option value="Medical">Medical</option>
+            <option value="Law">Law</option>
+            <option value="Arts_and_Humanities">Arts and Humanities</option>
+            <option value="Science">Science</option>
+            <option value="Management">Management</option>
+            <option value="Commerce">Commerce</option>
+            <option value="Agriculture">Agriculture</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="branch" class="form-label">Branch</label>
+          <input
+            type="text"
+            class="form-control"
+            id="branch"
+            name="branch"
+            placeholder="Enter your branch"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="college_name" class="form-label">College Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="college_name"
+            name="college_name"
+            placeholder="Enter your college name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="cgpa" class="form-label">CGPA (Out of 10)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="cgpa"
+            name="cgpa"
+            step="0.01"
+            min="0"
+            max="10"
+            placeholder="Enter your CGPA"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="yearly_income" class="form-label"
+            >Yearly Family Income</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="yearly_income"
+            name="yearly_income"
+            placeholder="Enter yearly family income (in ₹)"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="diet_type" class="form-label">Diet Type</label>
+          <select class="form-select" id="diet_type" name="diet_type" required>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="non_vegetarian">Non-Vegetarian</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="anxiety_level" class="form-label">Anxiety Level</label>
+          <input
+            type="number"
+            class="form-control"
+            id="anxiety_level"
+            name="anxiety_level"
+            placeholder="Enter anxiety level(0-30)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="self_esteem" class="form-label">Self Esteem</label>
+          <input
+            type="number"
+            class="form-control"
+            id="self_esteem"
+            name="self_esteem"
+            placeholder="Enter self-esteem level(0-30)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="mental_health_history" class="form-label"
+            >Mental Health History</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="mental_health_history"
+            name="mental_health_history"
+            placeholder="Enter mental health history (0 or 1)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="depression" class="form-label">Depression</label>
+          <input
+            type="number"
+            class="form-control"
+            id="depression"
+            name="depression"
+            placeholder="Enter depression level(0-30)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="headache" class="form-label">Headache</label>
+          <input
+            type="number"
+            class="form-control"
+            id="headache"
+            name="headache"
+            placeholder="Enter headache frequency(1-5)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="blood_pressure" class="form-label">Blood Pressure</label>
+          <input
+            type="number"
+            class="form-control"
+            id="blood_pressure"
+            name="blood_pressure"
+            placeholder="Enter blood pressure level(1,2 or 3)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="sleep_quality" class="form-label">Sleep Quality</label>
+          <input
+            type="number"
+            class="form-control"
+            id="sleep_quality"
+            name="sleep_quality"
+            placeholder="Enter sleep quality level(1-5)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="breathing_problem" class="form-label"
+            >Breathing Problem</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="breathing_problem"
+            name="breathing_problem"
+            placeholder="Enter breathing problem level(1-5)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="noise_level" class="form-label">Noise Level</label>
+          <input
+            type="number"
+            class="form-control"
+            id="noise_level"
+            name="noise_level"
+            placeholder="Enter noise level(1-5)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="living_conditions" class="form-label"
+            >Living Conditions</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="living_conditions"
+            name="living_conditions"
+            placeholder="Enter living conditions rating(1-5)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="safety" class="form-label">Safety</label>
+          <input
+            type="number"
+            class="form-control"
+            id="safety"
+            name="safety"
+            placeholder="Enter safety level(1-5)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="basic_needs" class="form-label">Basic Needs</label>
+          <input
+            type="number"
+            class="form-control"
+            id="basic_needs"
+            name="basic_needs"
+            placeholder="Enter basic needs satisfaction level(1-5)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="academic_performance" class="form-label"
+            >Academic Performance</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="academic_performance"
+            name="academic_performance"
+            placeholder="Enter academic performance level(1-5)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="study_load" class="form-label">Study Load</label>
+          <input
+            type="number"
+            class="form-control"
+            id="study_load"
+            name="study_load"
+            placeholder="Enter study load level"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="teacher_student_relationship" class="form-label"
+            >Teacher-Student Relationship</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="teacher_student_relationship"
+            name="teacher_student_relationship"
+            placeholder="Enter relationship rating"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="future_career_concerns" class="form-label"
+            >Future Career Concerns</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="future_career_concerns"
+            name="future_career_concerns"
+            placeholder="Enter concern level"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="social_support" class="form-label">Social Support</label>
+          <input
+            type="number"
+            class="form-control"
+            id="social_support"
+            name="social_support"
+            placeholder="Enter social support level(1,2 or 3)"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="peer_pressure" class="form-label">Peer Pressure</label>
+          <input
+            type="number"
+            class="form-control"
+            id="peer_pressure"
+            name="peer_pressure"
+            placeholder="Enter peer pressure level"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="extracurricular_activities" class="form-label"
+            >Extracurricular Activities</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="extracurricular_activities"
+            name="extracurricular_activities"
+            placeholder="Enter activity level"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="bullying" class="form-label">Bullying</label>
+          <input
+            type="number"
+            class="form-control"
+            id="bullying"
+            name="bullying"
+            placeholder="Enter bullying level"
+            required
+          />
+        </div>
+        <button type="submit">Predict Stress Level</button>
+      </form>
+    </div>
+    <!-- {% if prediction is not none %}
+    <h2>Predicted Stress Level: {{ prediction }}</h2>
+    {% endif %} -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Monitor and track your stress levels in real-time with interactive graphs and insights. Stay informed about your mental health with StressEase."
+    />
+    <meta
+      name="keywords"
+      content="Real-Time Stress Monitoring, Mental Health, Stress Levels, StressEase, Monitor Stress, Stress Management, Real-time Data"
+    />
+    <meta name="author" content="Mental Stress Detection Project" />
+    <title>StressEase | Real-Time Stress Monitoring</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Global Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(to bottom right, #6e7bff, #a3c0fe);
+        background-image: url("https://source.unsplash.com/1600x900/?stress,relax"); /* Example Background Image */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 1.5s ease-out;
+      }
+
+      /* Header Styles */
+      header {
+        background: rgba(0, 123, 255, 0.85);
+        padding: 2rem;
+        text-align: center;
+        color: white;
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(5px);
+        margin-bottom: 2rem;
+        border-radius: 10px;
+      }
+
+      header h1 {
+        font-size: 3rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      header nav {
+        margin-top: 1rem;
+      }
+
+      header nav a {
+        text-decoration: none;
+        color: white;
+        margin: 0 1rem;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+      }
+
+      header nav a:hover {
+        color: #ffeb3b;
+      }
+
+      /* Section Styles */
+      section {
+        width: 80%;
+        max-width: 700px;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 2s ease-out;
+        text-align: center;
+        backdrop-filter: blur(5px);
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+      }
+
+      p {
+        font-size: 1.5rem;
+        color: #333;
+        margin: 1rem 0;
+      }
+
+      button {
+        padding: 1rem 2rem;
+        background: #ff5722;
+        color: white;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      button:hover {
+        background: #e64a19;
+        transform: scale(1.05);
+      }
+
+      /* Stress Level Result */
+      #currentStressLevel {
+        font-size: 2rem;
+        color: #4caf50;
+        font-weight: bold;
+        margin-top: 1rem;
+      }
+
+      /* Footer Styles */
+      footer {
+        width: 100%;
+        background: rgba(0, 123, 255, 0.85);
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        margin-top: auto;
+        font-size: 1rem;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      footer a {
+        color: #ffeb3b;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      footer a:hover {
+        color: #ff5722;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 2.5rem;
+        }
+
+        section {
+          padding: 1.5rem;
+        }
+
+        button {
+          padding: 1rem 1.5rem;
+          font-size: 1rem;
+        }
+
+        p {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>StressEase</h1>
+      <p>Real-Time Stress Monitoring</p>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="templates\predict.html">Assess Stress</a>
+        <a href="dashboard.html">Dashboard</a>
+      </nav>
+    </header>
+
+    <section>
+      <h2>Monitor Your Stress Levels in Real-Time</h2>
+      <div>
+        <p>
+          Current Stress Level: <span id="currentStressLevel">Loading...</span>
+        </p>
+        <button id="startMonitoring">Start Monitoring</button>
+      </div>
+      <div id="stressChart" style="margin-top: 2rem"></div>
+      <!-- Placeholder for Chart -->
+    </section>
+
+    <footer>
+      <p>&copy; 2025 StressEase</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js for graph -->
+    <script>
+      document
+        .getElementById("startMonitoring")
+        .addEventListener("click", function () {
+          fetch("/real-time-monitor", {
+            method: "GET",
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Display the real-time predicted stress level
+              document.getElementById(
+                "currentStressLevel"
+              ).innerText = `Stress Level: ${data.stress_level} (Predicted)`;
+
+              // Dynamically updating a stress level chart with Chart.js
+              const ctx = document
+                .getElementById("stressChart")
+                .getContext("2d");
+              const stressChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                  labels: data.time_stamps,
+                  datasets: [
+                    {
+                      label: "Stress Level Over Time",
+                      data: data.stress_values,
+                      borderColor: "#ff5722",
+                      backgroundColor: "rgba(255, 87, 34, 0.2)",
+                      borderWidth: 2,
+                      fill: true,
+                    },
+                  ],
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: "Stress Level Monitoring Over Time",
+                    },
+                    tooltip: {
+                      callbacks: {
+                        label: function (tooltipItem) {
+                          return `Stress Level: ${tooltipItem.raw}`;
+                        },
+                      },
+                    },
+                  },
+                  scales: {
+                    x: {
+                      title: {
+                        display: true,
+                        text: "Time",
+                      },
+                    },
+                    y: {
+                      title: {
+                        display: true,
+                        text: "Stress Level",
+                      },
+                      min: 0,
+                      max: 100,
+                    },
+                  },
+                },
+              });
+            });
+        });
+    </script>
+  </body>
+</html>

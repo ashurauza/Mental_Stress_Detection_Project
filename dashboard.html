@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StressEase | Insightful Dashboard</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+        color: #333;
+        transition: background 0.5s ease;
+        overflow-x: hidden;
+      }
+      header {
+        background: #007bff;
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2rem;
+        animation: fadeIn 2s ease-in-out;
+      }
+      nav {
+        display: flex;
+        gap: 1.5rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        background: #0056b3;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+      nav a:hover {
+        background: #003f7f;
+      }
+      section {
+        padding: 5rem 2rem 2rem;
+        text-align: center;
+        animation: fadeIn 2s ease-in-out;
+      }
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+      .box {
+        margin: 2rem auto;
+        max-width: 80%;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        animation: slideIn 1s ease-out;
+        position: relative;
+        z-index: 1;
+      }
+      #chart-container {
+        margin: 3rem auto;
+        max-width: 80%;
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      footer {
+        background: #007bff;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 3rem;
+        font-size: 0.9rem;
+      }
+      .feature {
+        margin: 3rem auto;
+        max-width: 80%;
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1.5s ease-in-out;
+      }
+      .feature h3 {
+        font-size: 1.8rem;
+        color: #007bff;
+        margin-bottom: 1rem;
+      }
+      .feature p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+      }
+      .btn-primary {
+        padding: 0.75rem 1.5rem;
+        color: white;
+        background: #007bff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: #0056b3;
+      }
+
+      /* Animation Effects */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes slideIn {
+        0% {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Dark Mode */
+      body.dark-mode {
+        background: #121212;
+        color: #fff;
+      }
+      header.dark-mode {
+        background: #333;
+      }
+      footer.dark-mode {
+        background: #333;
+      }
+
+      /* Stress Quiz */
+      .quiz {
+        margin-top: 2rem;
+        padding: 2rem;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .quiz input {
+        margin: 1rem 0;
+        padding: 0.5rem;
+        font-size: 1rem;
+        width: 100%;
+      }
+
+      /* Smooth Scroll */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Button Animation */
+      .btn-primary {
+        transition: transform 0.2s ease-in-out;
+      }
+      .btn-primary:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>StressEase Dashboard</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="templates\predict.html">Assess Stress</a>
+        <a href="mood-tracker.html">Track Mood</a>
+        <!-- <a href="#" onclick="toggleDarkMode()">Toggle Dark Mode</a> -->
+      </nav>
+    </header>
+
+    <section id="home">
+      <h2>Dataset Insights</h2>
+      <p>
+        Explore stress statistics and gain valuable insights about student
+        well-being.
+      </p>
+      <div id="chart-container">
+        <h3>Stress Level by Department</h3>
+        <p>Interactive Bar Chart Loading...</p>
+        <canvas id="barChart"></canvas>
+      </div>
+      <div class="feature">
+        <h3>Key Features</h3>
+        <p>- View aggregated stress data across departments.</p>
+        <p>- Interactive charts for visualizing stress trends.</p>
+        <p>- AI-driven recommendations based on user input.</p>
+      </div>
+    </section>
+
+    <section id="track-mood">
+      <h2>Personalized Recommendations</h2>
+      <p>Get tailored advice to reduce stress and improve well-being.</p>
+      <button class="btn-primary" onclick="showRecommendations()">
+        Generate Recommendations
+      </button>
+      <div id="recommendations" style="margin-top: 1rem"></div>
+    </section>
+
+    <section class="quiz">
+      <h2>Stress Assessment Quiz</h2>
+      <form id="stressQuizForm">
+        <label for="question1">How often do you feel stressed?</label>
+        <input type="radio" name="q1" value="High" /> High
+        <input type="radio" name="q1" value="Medium" /> Medium
+        <input type="radio" name="q1" value="Low" /> Low
+
+        <label for="question2">How much sleep do you get?</label>
+        <input type="radio" name="q2" value="Less than 6 hours" /> Less than 6
+        hours <input type="radio" name="q2" value="6-8 hours" /> 6-8 hours
+        <input type="radio" name="q2" value="More than 8 hours" /> More than 8
+        hours
+
+        <button type="button" class="btn-primary" onclick="submitQuiz()">
+          Submit Quiz
+        </button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 StressEase | Empowering Student Well-Being</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Chart Initialization
+      const ctx = document.getElementById("barChart").getContext("2d");
+      const barChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Engineering", "Medical", "Arts", "Science", "Commerce"],
+          datasets: [
+            {
+              label: "Average Stress Levels",
+              data: [5.6, 4.8, 3.9, 4.5, 5.1],
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            title: {
+              display: true,
+              text: "Average Stress Levels by Department",
+            },
+          },
+        },
+      });
+
+      // Recommendations Functionality
+      function showRecommendations() {
+        const recommendationsDiv = document.getElementById("recommendations");
+        recommendationsDiv.innerHTML = `
+                <div class="feature">
+                    <h3>Recommendations:</h3>
+                    <ul>
+                        <li>Practice mindfulness and meditation daily.</li>
+                        <li>Ensure at least 7-8 hours of quality sleep.</li>
+                        <li>Engage in physical activities or exercise regularly.</li>
+                        <li>Maintain a balanced diet with nutritious food.</li>
+                        <li>Limit screen time and use digital detox techniques.</li>
+                    </ul>
+                </div>`;
+      }
+
+      // Dark Mode Toggle
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+        document.querySelector("header").classList.toggle("dark-mode");
+        document.querySelector("footer").classList.toggle("dark-mode");
+      }
+
+      // Stress Quiz Functionality
+      function submitQuiz() {
+        const form = document.getElementById("stressQuizForm");
+        const quizResults = {
+          q1: form.q1.value,
+          q2: form.q2.value,
+        };
+        alert(`Quiz Submitted! Results: ${JSON.stringify(quizResults)}`);
+      }
+    </script>
+  </body>
+</html>

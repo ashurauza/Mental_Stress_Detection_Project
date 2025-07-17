@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StressEase | Discussion Forum</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <style>
+      /* CSS Styles (Same as previously provided) */
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+        color: #333;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      body.dark-mode {
+        background-color: #121212;
+        color: #fff;
+      }
+      header {
+        background: #007bff;
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2rem;
+      }
+      nav {
+        display: flex;
+        gap: 1rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        background: #0056b3;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+      nav a:hover {
+        background: #003f7f;
+      }
+      #darkModeToggle {
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: white;
+      }
+      section {
+        padding: 2rem;
+        text-align: center;
+      }
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      #forumPostForm {
+        margin-bottom: 2rem;
+      }
+      textarea {
+        width: 80%;
+        padding: 1rem;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        resize: none;
+        margin-bottom: 1rem;
+        transition: border-color 0.3s;
+      }
+      textarea:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+      button {
+        padding: 1rem 2rem;
+        background: #007bff;
+        color: white;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .forum-post {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 1rem 0;
+        transition: transform 0.3s ease;
+      }
+      .forum-post:hover {
+        transform: translateY(-5px);
+      }
+      .post-author {
+        font-size: 0.9rem;
+        color: #888;
+        text-align: right;
+        margin-top: 1rem;
+      }
+      footer {
+        background: #007bff;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>StressEase Forum</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="templates/predict.html">Assess Stress</a>
+        <a href="dashboard.html">Dashboard</a>
+      </nav>
+      <span id="darkModeToggle" onclick="toggleDarkMode()">🌙</span>
+    </header>
+    <section>
+      <h2>Discussion Forum</h2>
+      <p>Share your thoughts, experiences, and stress management tips.</p>
+      <form id="forumPostForm">
+        <textarea
+          id="forumPost"
+          rows="4"
+          placeholder="Post your thoughts..."
+          required
+        ></textarea>
+        <button type="submit">Post</button>
+      </form>
+      <div id="forumPosts">
+        <!-- Forum posts will be dynamically added here -->
+      </div>
+    </section>
+    <footer>
+      <p>&copy; 2025 StressEase | Empowering Student Well-Being</p>
+    </footer>
+    <script>
+      // Toggle Dark Mode
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+      }
+
+      // Handle Forum Posts
+      const forumPostForm = document.getElementById("forumPostForm");
+      const forumPostInput = document.getElementById("forumPost");
+      const forumPostsContainer = document.getElementById("forumPosts");
+
+      forumPostForm.addEventListener("submit", (event) => {
+        event.preventDefault(); // Prevent form submission
+
+        const postContent = forumPostInput.value.trim();
+        if (postContent === "") return; // Avoid empty posts
+
+        // Create a new post element
+        const postElement = document.createElement("div");
+        postElement.className = "forum-post";
+        postElement.innerHTML = `
+          <p>${postContent}</p>
+          <div class="post-author">Posted just now</div>
+        `;
+
+        // Add the post to the container
+        forumPostsContainer.prepend(postElement);
+
+        // Clear the textarea
+        forumPostInput.value = "";
+      });
+    </script>
+  </body>
+</html>

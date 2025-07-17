@@ -1,0 +1,164 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  background-color: #f4f7f6;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  background-color: #3a3a3a;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 1rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main Section */
+section {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form label {
+  font-size: 1.1rem;
+}
+
+form input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+form button:hover {
+  background-color: #45a049;
+}
+
+/* Stress Level Chart */
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Stress History Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th,
+td {
+  padding: 12px;
+  font-size: 1rem;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Footer */
+footer {
+  background-color: #3a3a3a;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  font-size: 1rem;
+}
+
+/* Alerts */
+.alert {
+  padding: 15px;
+  background-color: #f44336;
+  color: white;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+.alert.success {
+  background-color: #4caf50;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  nav a {
+    font-size: 0.9rem;
+    margin: 0 10px;
+  }
+
+  section {
+    padding: 15px;
+    margin: 15px;
+  }
+}
