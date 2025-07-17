@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate To-Do List with Calendar and Reminder</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+      }
+      header {
+        text-align: center;
+        background: #4caf50;
+        color: white;
+        padding: 1rem;
+      }
+      .container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 10px;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        text-align: center;
+      }
+      .day {
+        padding: 5px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+      }
+      .day:hover {
+        background: #e0f7fa;
+        cursor: pointer;
+      }
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .todo-list {
+        margin-top: 20px;
+      }
+      .todo-list h3 {
+        text-align: center;
+      }
+      .todo-sections {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .todo-sections button {
+        padding: 10px 15px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .todo-sections button:hover {
+        background: #45a049;
+      }
+      input[type="text"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      button {
+        padding: 10px 15px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #45a049;
+      }
+      .date-display {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      ul li {
+        padding: 8px;
+        margin: 5px 0;
+        background: #f0f0f0;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+      }
+      ul li button {
+        background: #e74c3c;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      ul li button:hover {
+        background: #c0392b;
+      }
+
+      /* Stress Ease Footer */
+      footer {
+        background-color: #4caf50;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+      }
+      footer h4 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+      footer p {
+        margin: 5px 0;
+        font-size: 0.9rem;
+      }
+      footer a {
+        color: #ffeb3b;
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Ultimate To-Do List with Calendar and Reminder</h1>
+    </header>
+    <div class="container">
+      <div class="date-display" id="currentDate"></div>
+
+      <div class="controls">
+        <button id="prevMonth">&lt; Previous</button>
+        <h2 id="currentMonth"></h2>
+        <button id="nextMonth">Next &gt;</button>
+      </div>
+      <div class="calendar" id="calendar"></div>
+
+      <div class="todo-list">
+        <h3>To-Do List</h3>
+        <div class="todo-sections">
+          <button id="allTasksBtn">All Tasks</button>
+          <button id="pendingTasksBtn">Pending Tasks</button>
+          <button id="completedTasksBtn">Completed Tasks</button>
+        </div>
+        <input type="text" id="todoInput" placeholder="Enter a task" />
+        <button id="addTodo">Add Task</button>
+        <ul id="todoItems"></ul>
+      </div>
+
+      <div class="reminder-form">
+        <h3>Set Reminder</h3>
+        <input type="text" id="reminderText" placeholder="Enter reminder" />
+        <input type="time" id="reminderTime" />
+        <button id="setReminder">Set Reminder</button>
+        <ul id="reminderList"></ul>
+      </div>
+    </div>
+
+    <!-- Stress Ease Footer -->
+    <footer>
+      <h4>© 2025 StressEase. All Rights Reserved.</h4>
+      <p>Take a Deep Breath!</p>
+      <p>Remember to relax and take breaks throughout your day.</p>
+      <p>
+        Need help?
+        <a
+          href="https://www.helpguide.org/articles/stress/stress-management.htm"
+          target="_blank"
+          >Learn stress management techniques here.</a
+        >
+      </p>
+    </footer>
+
+    <script>
+      const calendar = document.getElementById("calendar");
+      const currentMonth = document.getElementById("currentMonth");
+      const prevMonth = document.getElementById("prevMonth");
+      const nextMonth = document.getElementById("nextMonth");
+      const currentDate = document.getElementById("currentDate");
+
+      const todoInput = document.getElementById("todoInput");
+      const addTodo = document.getElementById("addTodo");
+      const todoItems = document.getElementById("todoItems");
+
+      const reminderText = document.getElementById("reminderText");
+      const reminderTime = document.getElementById("reminderTime");
+      const setReminder = document.getElementById("setReminder");
+      const reminderList = document.getElementById("reminderList");
+
+      const allTasksBtn = document.getElementById("allTasksBtn");
+      const pendingTasksBtn = document.getElementById("pendingTasksBtn");
+      const completedTasksBtn = document.getElementById("completedTasksBtn");
+
+      let date = new Date();
+      let todoList = [];
+      let filterStatus = "all"; // can be 'all', 'pending', or 'completed'
+
+      function renderCalendar() {
+        calendar.innerHTML = "";
+        const year = date.getFullYear();
+        const month = date.getMonth();
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        currentMonth.textContent = date.toLocaleDateString("en-us", {
+          month: "long",
+          year: "numeric",
+        });
+
+        for (let i = 0; i < firstDay; i++) {
+          const emptyCell = document.createElement("div");
+          emptyCell.classList.add("day");
+          calendar.appendChild(emptyCell);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayCell = document.createElement("div");
+          dayCell.classList.add("day");
+          dayCell.textContent = day;
+          if (day === date.getDate()) {
+            dayCell.style.backgroundColor = "#ffeb3b"; // Highlight today's date
+          }
+          calendar.appendChild(dayCell);
+        }
+      }
+
+      function updateCurrentDate() {
+        const now = new Date();
+        currentDate.textContent = now.toLocaleDateString("en-us", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      }
+
+      function renderTodoList() {
+        todoItems.innerHTML = "";
+        let filteredList = todoList;
+
+        if (filterStatus === "pending") {
+          filteredList = todoList.filter((item) => !item.completed);
+        } else if (filterStatus === "completed") {
+          filteredList = todoList.filter((item) => item.completed);
+        }
+
+        filteredList.forEach((item, index) => {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `${
+            item.task
+          } <button onclick="toggleComplete(${index})">${
+            item.completed ? "Undo" : "Complete"
+          }</button> <button onclick="deleteTask(${index})">Delete</button>`;
+          todoItems.appendChild(listItem);
+        });
+      }
+
+      function toggleComplete(index) {
+        todoList[index].completed = !todoList[index].completed;
+        renderTodoList();
+      }
+
+      function deleteTask(index) {
+        todoList.splice(index, 1);
+        renderTodoList();
+      }
+
+      prevMonth.addEventListener("click", () => {
+        date.setMonth(date.getMonth() - 1);
+        renderCalendar();
+      });
+
+      nextMonth.addEventListener("click", () => {
+        date.setMonth(date.getMonth() + 1);
+        renderCalendar();
+      });
+
+      addTodo.addEventListener("click", () => {
+        const task = todoInput.value.trim();
+        if (task) {
+          todoList.push({ task: task, completed: false });
+          renderTodoList();
+          todoInput.value = "";
+        }
+      });
+
+      setReminder.addEventListener("click", () => {
+        const reminder = reminderText.value.trim();
+        const time = reminderTime.value;
+
+        if (reminder && time) {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `${reminder} at ${time} <button onclick="this.parentElement.remove()">Delete</button>`;
+          reminderList.appendChild(listItem);
+          reminderText.value = "";
+          reminderTime.value = "";
+        }
+      });
+
+      allTasksBtn.addEventListener("click", () => {
+        filterStatus = "all";
+        renderTodoList();
+      });
+
+      pendingTasksBtn.addEventListener("click", () => {
+        filterStatus = "pending";
+        renderTodoList();
+      });
+
+      completedTasksBtn.addEventListener("click", () => {
+        filterStatus = "completed";
+        renderTodoList();
+      });
+
+      updateCurrentDate();
+      renderCalendar();
+      renderTodoList();
+    </script>
+  </body>
+</html>

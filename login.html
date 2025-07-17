@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | StressEase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gradient-to-br from-blue-400 to-cyan-400 min-h-screen flex flex-col items-center justify-center text-gray-900"
+  >
+    <!-- Header -->
+    <header class="text-center mb-6">
+      <h1 class="text-4xl font-bold text-white drop-shadow-lg">
+        StressEase Login
+      </h1>
+      <nav class="mt-4">
+        <a href="index.html" class="text-white hover:text-blue-200 underline"
+          >Home</a
+        >
+        <span class="mx-2 text-white">|</span>
+        <a href="signup.html" class="text-white hover:text-blue-200 underline"
+          >Signup</a
+        >
+      </nav>
+    </header>
+
+    <!-- Login Form -->
+    <section
+      class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md text-center"
+    >
+      <h2 class="text-2xl font-semibold text-blue-600 mb-4">Welcome Back!</h2>
+      <p class="text-gray-600 mb-6">
+        Please login to access your personalized stress insights and
+        recommendations.
+      </p>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label
+            for="username"
+            class="block text-left font-medium text-gray-700"
+            >Username</label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+            class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label
+            for="password"
+            class="block text-left font-medium text-gray-700"
+            >Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+            class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          Login
+        </button>
+      </form>
+
+      <p class="mt-4 text-sm">
+        Forgot your password?
+        <a href="reset-password.html" class="text-blue-600 hover:underline"
+          >Reset it here</a
+        >
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-8 bg-blue-600 text-white w-full py-4 text-center">
+      <p>&copy; 2025 StressEase | Empowering Student Well-Being</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Handle Login Form Submission
+      const loginForm = document.getElementById("loginForm");
+
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        // Get form data
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!username || !password) {
+          alert("Please fill out all fields.");
+          return;
+        }
+
+        // Simulate API request
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Login successful!");
+              window.location.href = "dashboard.html";
+            } else {
+              alert("Invalid credentials. Please try again.");
+            }
+          })
+          .catch(() => {
+            alert("An error occurred. Please try again later.");
+          });
+      });
+    </script>
+  </body>
+</html>

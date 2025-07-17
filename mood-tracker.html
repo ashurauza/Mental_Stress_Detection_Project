@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mood Tracker | StressEase</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+        padding: 0 1rem;
+        color: #333;
+        text-align: center;
+      }
+
+      header {
+        width: 100%;
+        background: #007bff;
+        color: white;
+        padding: 1.5rem 0;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      header h1 {
+        font-size: 3rem;
+        margin: 0;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      nav {
+        margin-top: 1rem;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 1rem;
+        font-size: 1.2rem;
+      }
+      nav a:hover {
+        color: #ffeb3b;
+      }
+
+      section {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+        width: 90%;
+        max-width: 600px;
+        animation: fadeIn 1s ease-out;
+      }
+
+      h2 {
+        font-size: 2rem;
+        color: #007bff;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        border: 2px solid #ccc;
+        margin-bottom: 1.5rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+
+      textarea:focus {
+        border-color: #007bff;
+      }
+
+      button {
+        padding: 1rem 2rem;
+        background: #ff5722;
+        color: white;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      button:hover {
+        background: #e64a19;
+        transform: scale(1.05);
+      }
+
+      #moodResult {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 1.5rem;
+        color: #4caf50;
+      }
+
+      #moodHistory {
+        margin-top: 2rem;
+        padding: 1rem;
+        background: #f0f8ff;
+        border-radius: 8px;
+      }
+
+      footer {
+        width: 100%;
+        background: #007bff;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        margin-top: auto;
+        font-size: 1rem;
+      }
+
+      footer a {
+        color: #00f2fe;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      footer a:hover {
+        color: #ffeb3b;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 2.5rem;
+        }
+
+        section {
+          padding: 1.5rem;
+        }
+
+        button {
+          padding: 1rem 1.5rem;
+          font-size: 1.1rem;
+        }
+
+        textarea {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Mood Tracker</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="templates\predict.html">Assess Stress</a>
+        <a href="dashboard.html">Dashboard</a>
+      </nav>
+    </header>
+
+    <section>
+      <h2>Track Your Mood</h2>
+      <form id="moodForm">
+        <textarea
+          id="userMood"
+          rows="4"
+          placeholder="How are you feeling today?"
+          required
+        ></textarea>
+        <button type="submit">Analyze Mood</button>
+      </form>
+      <p id="moodResult"></p>
+    </section>
+
+    <!-- Mood History -->
+    <section id="moodHistory">
+      <h3>Your Mood History</h3>
+      <ul id="historyList"></ul>
+      <!-- Clear History Button -->
+      <button id="clearHistoryButton">Clear Mood History</button>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 StressEase | Empowering Student Well-Being</p>
+    </footer>
+
+    <script>
+      document
+        .getElementById("moodForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const userMood = document.getElementById("userMood").value;
+
+          // Simulate mood analysis with a mock response
+          setTimeout(() => {
+            const sentiment = analyzeMood(userMood);
+            document.getElementById(
+              "moodResult"
+            ).innerText = `Your mood is: ${sentiment}`;
+
+            // Save mood to history
+            const historyList = document.getElementById("historyList");
+            const listItem = document.createElement("li");
+            listItem.innerText = `${new Date().toLocaleString()}: ${sentiment}`;
+            historyList.appendChild(listItem);
+
+            // Store mood in localStorage
+            const moodHistory = JSON.parse(
+              localStorage.getItem("moodHistory") || "[]"
+            );
+            moodHistory.push({
+              time: new Date().toLocaleString(),
+              mood: sentiment,
+            });
+            localStorage.setItem("moodHistory", JSON.stringify(moodHistory));
+          }, 500); // Simulate a short delay for user experience
+        });
+
+      // Mock mood analysis function
+      function analyzeMood(mood) {
+        if (mood.includes("happy") || mood.includes("good")) {
+          return "Positive 😊";
+        } else if (mood.includes("sad") || mood.includes("down")) {
+          return "Negative 😞";
+        } else {
+          return "Neutral 😐";
+        }
+      }
+
+      // Load mood history from localStorage
+      window.onload = () => {
+        const moodHistory = JSON.parse(
+          localStorage.getItem("moodHistory") || "[]"
+        );
+        const historyList = document.getElementById("historyList");
+        moodHistory.forEach((entry) => {
+          const listItem = document.createElement("li");
+          listItem.innerText = `${entry.time}: ${entry.mood}`;
+          historyList.appendChild(listItem);
+        });
+      };
+
+      // Clear mood history when button is clicked
+      document
+        .getElementById("clearHistoryButton")
+        .addEventListener("click", function () {
+          // Clear the history from localStorage
+          localStorage.removeItem("moodHistory");
+
+          // Clear the history from the page
+          document.getElementById("historyList").innerHTML = "";
+        });
+    </script>
+  </body>
+</html>

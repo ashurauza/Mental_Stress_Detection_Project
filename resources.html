@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Access mental health resources and tools to help manage stress and anxiety. Explore helpful links and apps for better mental well-being."
+    />
+    <meta
+      name="keywords"
+      content="Mental Health Resources, Stress Management, Therapy, Meditation, Mental Health Tools, Self-Care"
+    />
+    <meta name="author" content="Mental Stress Detection Project" />
+    <title>Mental Health Resources | StressEase</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Global Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(to bottom right, #4caf50, #8bc34a);
+        background-image: url("https://source.unsplash.com/1600x900/?nature,relaxation"); /* Background Image */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+        color: #333;
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 1.5s ease-out;
+      }
+
+      /* Header Styles */
+      header {
+        background: rgba(0, 123, 255, 0.85);
+        padding: 2rem;
+        text-align: center;
+        color: white;
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(5px);
+        margin-bottom: 2rem;
+        border-radius: 10px;
+      }
+
+      header h1 {
+        font-size: 3rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      header nav {
+        margin-top: 1rem;
+      }
+
+      header nav a {
+        text-decoration: none;
+        color: white;
+        margin: 0 1rem;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+      }
+
+      header nav a:hover {
+        color: #ffeb3b;
+      }
+
+      /* Section Styles */
+      section {
+        width: 80%;
+        max-width: 700px;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 2s ease-out;
+        text-align: center;
+        backdrop-filter: blur(5px);
+        transition: transform 0.3s ease;
+      }
+
+      section:hover {
+        transform: scale(1.02);
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin: 1.5rem 0;
+        font-size: 1.5rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        padding: 1rem;
+        transition: background-color 0.3s ease;
+      }
+
+      li:hover {
+        background-color: #e3f2fd;
+      }
+
+      a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: #ff5722;
+      }
+
+      /* Footer Styles */
+      footer {
+        width: 100%;
+        background: rgba(0, 123, 255, 0.85);
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        margin-top: auto;
+        font-size: 1rem;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      footer a {
+        color: #ffeb3b;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      footer a:hover {
+        color: #ff5722;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 2.5rem;
+        }
+
+        section {
+          padding: 1.5rem;
+        }
+
+        ul {
+          padding-left: 1rem;
+        }
+
+        li {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>StressEase</h1>
+      <p>Your Guide to Mental Health Resources</p>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="templates\predict.html">Assess Stress</a>
+      </nav>
+    </header>
+
+    <section>
+      <h2>Helpful Resources for Mental Health</h2>
+      <ul>
+        <li>
+          <a href="https://www.headspace.com/" target="_blank"
+            >Headspace - Meditation & Relaxation</a
+          >
+        </li>
+        <li>
+          <a href="https://www.mentalhealth.gov/" target="_blank"
+            >MentalHealth.gov</a
+          >
+        </li>
+        <li>
+          <a href="https://www.psychologytoday.com/" target="_blank"
+            >Psychology Today - Find a Therapist</a
+          >
+        </li>
+        <li>
+          <a href="https://www.calm.com/" target="_blank"
+            >Calm - Stress Management App</a
+          >
+        </li>
+        <li>
+          <a href="https://www.takingcareofyou.org/" target="_blank"
+            >Taking Care of You - Self-Care Resources</a
+          >
+        </li>
+        <li>
+          <a href="https://www.7cups.com/" target="_blank"
+            >7 Cups - Emotional Support and Therapy</a
+          >
+        </li>
+      </ul>
+      <p style="font-size: 1.3rem; color: #333">
+        These resources offer valuable tools and guidance to help manage stress,
+        anxiety, and other mental health concerns. Take a moment to explore them
+        and prioritize your well-being.
+      </p>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 StressEase. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>

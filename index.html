@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StressEase | Advanced Stress Management</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="static/style.css" />
+    <style>
+      /* Custom Styles */
+      body {
+        font-family: "Arial", sans-serif;
+        background-image: url("https://static.vecteezy.com/system/resources/previews/004/928/056/original/mental-health-awareness-with-meditation-background-free-vector.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        text-shadow: 1px 1px 3px rgba(255, 182, 193, 0.3); /* Light pink text shadow */
+        animation: backgroundMove 30s ease infinite;
+      }
+
+      @keyframes backgroundMove {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 100% 100%;
+        }
+      }
+
+      header {
+        background-color: rgba(255, 182, 193, 0.7); /* Light pink background */
+        color: #ffffff;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(255, 182, 193, 0.3); /* Light pink shadow */
+        position: relative;
+        z-index: 10;
+        border-bottom: 2px solid #00bfae; /* Light blue-green border */
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.5); /* Light pink shadow */
+      }
+
+      .navbar-nav .nav-link {
+        color: #00bfae !important; /* Light blue-green color for links */
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffcccb !important; /* Light pink color */
+      }
+
+      .sidebar {
+        background-color: #00bfae; /* Light blue-green background */
+        padding: 20px;
+        height: 100vh;
+        position: fixed;
+        top: 90px;
+        left: 0;
+        width: 250px;
+        transition: 0.3s;
+        z-index: 20;
+        box-shadow: 2px 0px 10px rgba(0, 191, 174, 0.3); /* Light blue-green shadow */
+      }
+
+      .sidebar a {
+        color: #ffffff; /* White color for sidebar links */
+        font-weight: bold;
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        transition: background-color 0.3s, transform 0.3s;
+        margin-bottom: 10px;
+        border-radius: 5px;
+      }
+
+      .sidebar a:hover {
+        background-color: #ffcccb; /* Light pink background on hover */
+        transform: scale(1.1);
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(255, 182, 193, 0.3); /* Light pink shadow */
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease-in-out;
+      }
+
+      .main-content:hover {
+        transform: translateY(-10px);
+      }
+
+      .feature-item {
+        background: linear-gradient(
+          45deg,
+          #ffcccb,
+          #00bfae
+        ); /* Light pink to light blue-green gradient */
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(255, 182, 193, 0.3); /* Light pink shadow */
+        padding: 1.5rem;
+        margin: 1.5rem;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        color: #333;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 200px;
+      }
+
+      .feature-item:hover {
+        transform: translateY(-10px);
+        background-color: #ffcccb; /* Light pink on hover */
+      }
+
+      .feature-item i {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        color: #ff7d99; /* Light pink color for icons */
+      }
+
+      footer {
+        background-color: rgba(255, 182, 193, 0.7); /* Light pink background */
+        color: rgb(11, 221, 106);
+        text-align: center;
+        padding: 1rem;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+      }
+
+      footer p {
+        font-size: 1.1rem;
+        text-shadow: 1px 1px 3px rgba(255, 182, 193, 0.3); /* Light pink shadow */
+      }
+
+      .logo img {
+        width: 100px;
+        height: auto;
+      }
+
+      .brainstorm {
+        position: absolute;
+        top: 30%;
+        right: 40%;
+        animation: float 6s ease-in-out infinite;
+        font-size: 3rem;
+        color: #240a84; /* Light pink text */
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          position: relative;
+          width: 100%;
+          height: auto;
+          display: none;
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .navbar-toggler {
+          background-color: #fff;
+        }
+
+        .feature-item {
+          margin: 1rem;
+        }
+      }
+
+      /* Updated button styles */
+      #start-assessment-btn {
+        background: linear-gradient(
+          135deg,
+          #ff7f7f,
+          #00bfae
+        ); /* Light pink to light blue gradient */
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        display: inline-block;
+        box-shadow: none; /* Removed the white box effect */
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+      }
+
+      #start-assessment-btn:hover {
+        background: linear-gradient(
+          135deg,
+          #ffcccb,
+          #00e0b0
+        ); /* Light pink to teal */
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      #start-assessment-btn:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="logo">
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/013/417/335/non_2x/human-wellness-health-and-freedom-life-logo-design-concept-template-vector.jpg"
+            alt="StressEase Logo"
+            class="logo-img"
+          />
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="login.html">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="signup.html">Sign Up</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="resources.html">Resources</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="mood-tracker.html">Track Mood</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="forum.html">Forum</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="brainstorm">
+        <p>Innovate Your Well-being!</p>
+      </div>
+    </header>
+
+    <div class="sidebar">
+      <h4 class="text-white">
+        <i><strong>StressEase</strong></i>
+      </h4>
+      <a href="calendar-reminders.html" class="sidebar-link"
+        >Calendar & Reminders</a
+      >
+      <a href="dashboard.html" class="sidebar-link">Dashboard</a>
+      <a href="real-time-monitor.html" class="sidebar-link"
+        >Real-Time Monitor</a
+      >
+      <a href="recommendations.html" class="sidebar-link">Recommendations</a>
+      <a href="stress-history.html" class="sidebar-link">Stress History</a>
+    </div>
+
+    <div class="main-content">
+      <h2>Welcome to StressEase</h2>
+      <p>Track and manage your mental health with ease.</p>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-item">
+            <i class="fas fa-brain"></i>
+            <h3>Mindfulness</h3>
+            <p>Stay grounded and present with mindfulness exercises.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-item">
+            <i class="fas fa-heartbeat"></i>
+            <h3>Health Monitoring</h3>
+            <p>Track your health metrics and stay in tune with your body.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-item">
+            <i class="fas fa-comments"></i>
+            <h3>Community Support</h3>
+            <p>Connect with others and share experiences.</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <a href="templates/predict.html" id="start-assessment-btn"
+          >Start Stress Assessment</a
+        >
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 StressEase. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
+<!-- mongodb://localhost:27017/ -->
